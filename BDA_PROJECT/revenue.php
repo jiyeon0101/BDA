@@ -1,3 +1,32 @@
+<?php
+$mysqli = mysqli_connect("127.0.0.1", "root", "", "restaurant");
+
+if (mysqli_connect_errno()) {
+    printf("Connect failed: %s\n", mysqli_connect_error());
+    exit();
+} else {
+    $sql = "SELECT store_ID, SUM(income - expenses) AS total_amount FROM store_revenue GROUP BY store_ID";
+    $res = mysqli_query($mysqli, $sql);
+
+    if ($res) {
+        $data = array();
+
+        while ($newArray = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
+            $category = $newArray['store_ID'];
+            $totalAmount = $newArray['total_amount'];
+
+            // Add data to the $data array in the format expected by CanvasJS
+            $data[] = array("y" => $totalAmount, "label" => $category);
+        }
+    } else {
+        printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+    }
+
+    mysqli_free_result($res);
+    mysqli_close($mysqli);
+} 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +37,29 @@
     integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" 
     crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="test.js" defer></script>
+    <script>
+    window.onload = function() {
+    
+    var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "light2",
+        title:{
+            text: "Revenue Summary"
+        },
+        axisY: {
+            title: "Total amount"
+        },
+        data: [{
+            type: "column",
+            yValueFormatString: "#,##0.## $",
+            dataPoints: <?php echo json_encode($data, JSON_NUMERIC_CHECK); ?>
+        }]
+    });
+    chart.render();
+    
+    }
+    </script>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
     <title>Management</title>
 </head>
 <body id="page-body">
@@ -32,7 +84,7 @@
                 </a>
             </li>
             <li>
-                <a href="ranking.php">
+                <a href="ranking.html">
                     <i class="fa-regular fa-star"></i>
                     <span class="nav-item">Ranking</span>
                 </a>
@@ -51,7 +103,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="customer.html">
+                    <a href="">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         <span class="nav-item">Logout</span>
                     </a>
@@ -63,8 +115,32 @@
         <h1>Revenue</h1>
         <br>
         <span></span>
-        <br><br>
+        <br>
+        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+        <br>
         <?php
+        $mysqli = mysqli_connect("127.0.0.1","root","","restaurant");
+        if (mysqli_connect_errno()) {
+            printf("Connect failed: %s\n",mysqli_connect_error());
+            exit();
+        }
+        else {
+            $sql = "select * from store_revenue";
+            $res = mysqli_query($mysqli,$sql);
+            if ($res) {
+                while ($newArray = mysqli_fetch_array($res,MYSQLI_ASSOC)) {
+                    $expenses = $newArray['expenses'];
+                    $income = $newArray['income'];
+                    $store_id = $newArray['store_ID'];
+                    echo "The total expenses are ".$expenses.", total income is ".$income." 
+                    and store ID is ".$store_id.".","<br/><br/>";
+                    }
+        } else {
+            printf("Could not retrieve records: %s\n",mysqli_error($mysqli));
+        }
+        mysqli_free_result($res);
+        mysqli_close($mysqli);
+        }
         ?>
     </div>
 </body>
