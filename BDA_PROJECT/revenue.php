@@ -38,26 +38,48 @@ if (mysqli_connect_errno()) {
     crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="test.js" defer></script>
     <script>
-    window.onload = function() {
-    
-    var chart = new CanvasJS.Chart("chartContainer", {
-        animationEnabled: true,
-        theme: "light2",
-        title:{
-            text: "Revenue Summary"
-        },
-        axisY: {
-            title: "Total amount"
-        },
-        data: [{
-            type: "column",
-            yValueFormatString: "#,##0.## $",
-            dataPoints: <?php echo json_encode($data, JSON_NUMERIC_CHECK); ?>
-        }]
-    });
-    chart.render();
-    
-    }
+        window.onload = function() {
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                theme: "light2",
+                title: {
+                    text: "Revenue Summary"
+                },
+                axisY: {
+                    title: "Total amount"
+                },
+                data: [{
+                    type: "column",
+                    yValueFormatString: "#,##0.## $",
+                    dataPoints: <?php echo json_encode($data, JSON_NUMERIC_CHECK); ?>
+                }]
+            });
+
+            // Add click event handler for chart pillars
+            chart.options.data[0].click = function(e) {
+                var selectedItem = e.dataPoint.label;
+                displayRevenueDetails(selectedItem);
+            };
+
+            chart.render();
+
+            // Function to display revenue details
+            function displayRevenueDetails(storeId) {
+                // Use AJAX to fetch details for the selected store ID
+                // Replace the following line with your actual endpoint
+                var url = "get_revenue_details.php?store_id=" + storeId;
+
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        // Display the details in a suitable area on your page
+                        document.getElementById("revenueDetails").innerHTML = this.responseText;
+                    }
+                };
+                xhr.open("GET", url, true);
+                xhr.send();
+            }
+        }
     </script>
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
     <title>Management</title>
@@ -118,30 +140,7 @@ if (mysqli_connect_errno()) {
         <br>
         <div id="chartContainer" style="height: 370px; width: 100%;"></div>
         <br>
-        <?php
-        $mysqli = mysqli_connect("127.0.0.1","root","","restaurant");
-        if (mysqli_connect_errno()) {
-            printf("Connect failed: %s\n",mysqli_connect_error());
-            exit();
-        }
-        else {
-            $sql = "select * from store_revenue";
-            $res = mysqli_query($mysqli,$sql);
-            if ($res) {
-                while ($newArray = mysqli_fetch_array($res,MYSQLI_ASSOC)) {
-                    $expenses = $newArray['expenses'];
-                    $income = $newArray['income'];
-                    $store_id = $newArray['store_ID'];
-                    echo "The total expenses are ".$expenses.", total income is ".$income." 
-                    and store ID is ".$store_id.".","<br/><br/>";
-                    }
-        } else {
-            printf("Could not retrieve records: %s\n",mysqli_error($mysqli));
-        }
-        mysqli_free_result($res);
-        mysqli_close($mysqli);
-        }
-        ?>
+        <div id="revenueDetails"></div>
     </div>
 </body>
 </html>
