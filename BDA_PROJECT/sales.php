@@ -5,7 +5,7 @@ if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
     exit();
 } else {
-    $sql = "SELECT income_ID, SUM(selling_income) AS total_amount FROM income GROUP BY income_ID";
+    $sql = "SELECT income_ID, SUM(selling_income) AS total_amount FROM income GROUP BY income_ID ORDER BY total_amount DESC";
     $res = mysqli_query($mysqli, $sql);
 
     if ($res) {
@@ -47,6 +47,9 @@ if (mysqli_connect_errno()) {
                 },
                 axisY: {
                     title: "Total amount"
+                },
+                axisX: {
+                    title: "Store ID"
                 },
                 data: [{
                     type: "column",

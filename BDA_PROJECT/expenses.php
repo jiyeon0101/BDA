@@ -6,7 +6,7 @@ if (mysqli_connect_errno()) {
     exit();
 } else {
     $sql = "SELECT expense_ID, SUM(location_rent + water_electricity_bill + production_cost +
-    maintenance_cost + staff_cost + packaging_cost) AS total_amount FROM expenses GROUP BY expense_ID";
+    maintenance_cost + staff_cost + packaging_cost) AS total_amount FROM expenses GROUP BY expense_ID ORDER BY total_amount DESC";
     $res = mysqli_query($mysqli, $sql);
 
     if ($res) {
@@ -48,6 +48,9 @@ if (mysqli_connect_errno()) {
                 },
                 axisY: {
                     title: "Total amount"
+                },
+                axisX: {
+                    title: "Store ID"
                 },
                 data: [{
                     type: "column",

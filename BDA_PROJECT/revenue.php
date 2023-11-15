@@ -18,6 +18,11 @@ if (mysqli_connect_errno()) {
             // Add data to the $data array in the format expected by CanvasJS
             $data[] = array("y" => $totalAmount, "label" => $category);
         }
+
+        // Sort the data array by the 'y' (total_amount) in descending order
+        usort($data, function ($a, $b) {
+            return $b['y'] - $a['y'];
+        });
     } else {
         printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
     }
@@ -47,6 +52,9 @@ if (mysqli_connect_errno()) {
                 },
                 axisY: {
                     title: "Total amount"
+                },
+                axisX: {
+                    title: "Store ID"
                 },
                 data: [{
                     type: "column",
@@ -79,7 +87,7 @@ if (mysqli_connect_errno()) {
                 xhr.open("GET", url, true);
                 xhr.send();
             }
-        }
+        };
     </script>
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
     <title>Management</title>
