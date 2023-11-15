@@ -78,18 +78,16 @@
                             <thead class="text-uppercase">
                                 <tr class="table-active">
                                     <th scope="col">id</th>
-                                    <th scope="col">item</th>
-                                    <th scope="col">price</th>
-                                    <th scope="col">category</th>
+                                    <th scope="col">name</th>
                                     <th scope="col">amount</th>
-                                    <th scope="col">ingredients list</th>
+                                    <th scope="col">cost</th>
                                 </tr>
                             </thead>
                         
                         <tbody>
                             <?php
                                 $conn = new mysqli("localhost", "root", "", "restaurant_data");
-                                $sql = "select item_name, price, item_category, item_size, ingredients_list from items";
+                                $sql = "select stock_name, stock_amount, cost from inventory";
                                 $reuslt = $conn->query($sql);
                                 $count = 0;
                                 if ($reuslt->num_rows > 0) {
@@ -99,11 +97,9 @@
 
                                 <tr>
                                     <th><?php echo $count ?></th>
-                                    <th><?php echo $row["item_name"] ?></th>
-                                    <th><?php echo $row["price"] ?></th>
-                                    <th><?php echo $row["item_category"] ?></th>
-                                    <th><?php echo $row["item_size"] ?></th>
-                                    <th><?php echo $row["ingredients_list"] ?></th>
+                                    <th><?php echo $row["stock_name"] ?></th>
+                                    <th><?php echo $row["stock_amount"] ?></th>
+                                    <th><?php echo $row["cost"] ?></th>
                                 </tr>
 
                                 <?php
