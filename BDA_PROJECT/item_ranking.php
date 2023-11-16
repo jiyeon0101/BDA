@@ -7,18 +7,21 @@ $dbname = "restaurant_data";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
 $sqlProducts = "SELECT * FROM Items";
 $resultProducts = $conn->query($sqlProducts);
 
-$sqlTopSellers = "SELECT item_name, SUM(price) as total_sales FROM Items GROUP BY item_name ORDER BY total_sales DESC LIMIT 3";
+$sqlTopSellers = "SELECT items.item_ID, items.item_name, SUM(Order_items.amount) AS total_quantity
+FROM Order_items
+JOIN items ON Order_items.item_ID = items.item_ID
+JOIN orders ON Order_items.order_ID = Orders.order_ID
+GROUP BY items.item_ID, items.item_name
+ORDER BY total_quantity DESC
+LIMIT 3";
 $resultTopSellers = $conn->query($sqlTopSellers);
-
 
 $conn->close();
 ?>
@@ -63,14 +66,13 @@ $conn->close();
         th {
             background-color: #f2f2f2;
         }
-
-
     </style>
 </head>
 <body>
     <div class="container">
         <h1>MENU</h1>
 
+       
         <h2>All Items</h2>
         <table>
             <tr>
@@ -94,24 +96,42 @@ $conn->close();
                 echo "</tr>";
             }
             ?>
-        </table>
+</table>
 
-        <h2>Top 3 Best Sellers</h2>
-        <table>
-            <tr>
-                <th>Item Name</th>
-                <th>Total Sales</th>
-            </tr>
-            <?php
-            
-            while ($row = $resultTopSellers->fetch_assoc()) {
-                echo "<tr>";
-                echo "<td>{$row['item_name']}</td>";
-                echo "<td>{$row['total_sales']}</td>";
-                echo "</tr>";
-            }
-            ?>
-        </table>
+<h2>Top 3 Best Sellers</h2>
+<table>
+    <tr>
+        <th>Item Name</th>
+        <th>Popularity</th>
+    </tr>
+    <?php
+    
+    $starsArray = [5, 4, 3];
+
+    foreach ($resultTopSellers as $key => $row) {
+        echo "<tr>";
+        echo "<td>{$row['item_name']}</td>";
+        echo "<td>" . generateStars($starsArray[$key]) . "</td>";
+        echo "</tr>";
+    }
+    ?>
+</table>
+
+<?php
+
+function generateStars($numStars) {
+   
+    $numStars = max(1, min(5, $numStars));
+
+    
+    $stars = str_repeat("<span style='color: gold;'>&#9733;</span>", $numStars);
+
+    return $stars;
+}
+?>
+
+
+    
     </div>
 </body>
 </html>
