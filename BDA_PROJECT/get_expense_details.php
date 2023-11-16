@@ -3,7 +3,7 @@ $expenseId = $_GET['expense_id'];
 
 // Perform your SQL query to get details for $expenseId
 // Replace the following lines with your actual SQL query
-$mysqli = mysqli_connect("127.0.0.1", "root", "", "restaurant");
+$mysqli = mysqli_connect("127.0.0.1", "root", "", "review3");
 $sql = "SELECT * FROM expenses WHERE expense_ID = $expenseId";
 $res = mysqli_query($mysqli, $sql);
 

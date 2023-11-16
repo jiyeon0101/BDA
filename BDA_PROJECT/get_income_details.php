@@ -3,7 +3,7 @@ $incomeId = $_GET['income_id'];
 
 // Perform your SQL query to get details for $incomeId
 // Replace the following lines with your actual SQL query
-$mysqli = mysqli_connect("127.0.0.1", "root", "", "restaurant");
+$mysqli = mysqli_connect("127.0.0.1", "root", "", "review3");
 $sql = "SELECT * FROM income WHERE income_ID = $incomeId";
 $res = mysqli_query($mysqli, $sql);
 

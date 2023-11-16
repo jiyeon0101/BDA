@@ -1,7 +1,7 @@
 <?php
 $storeId = $_GET['store_id'];
 
-$mysqli = mysqli_connect("127.0.0.1", "root", "", "restaurant");
+$mysqli = mysqli_connect("127.0.0.1", "root", "", "review3");
 
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
@@ -19,7 +19,7 @@ if (mysqli_connect_errno()) {
 
     if ($res) {
         // Bind the result variables
-        mysqli_stmt_bind_result($stmt, $store_ID, $income, $expenses);
+        mysqli_stmt_bind_result($stmt, $store_ID, $income, $expenses, $revenue, $revenue_status);
 
         // Fetch the details
         mysqli_stmt_fetch($stmt);
@@ -28,6 +28,8 @@ if (mysqli_connect_errno()) {
         echo "Total Expenses: " . $expenses . "<br>";
         echo "Total Income: " . $income . "<br>";
         echo "Store ID: " . $store_ID . "<br>";
+        echo "Revenue: " . $revenue . "<br>";
+        echo "Revenue Status: " . $revenue_status . "<br>";
     } else {
         echo "Error: " . mysqli_error($mysqli);
     }
