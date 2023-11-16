@@ -33,7 +33,6 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MENU</title>
     <style>
-        <!-- Your CSS styling goes here -->
 
         body {
             font-family: Arial, sans-serif;
