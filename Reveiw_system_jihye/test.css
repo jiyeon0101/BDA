@@ -275,18 +275,18 @@ nav:hover {
   }
   
   .profile-image {
-    margin-right: 20px; /* Adjust as needed */
+    margin-right: 20px;
   }
   
   .info-row {
     display: flex;
-    flex-direction: column; /* 세로로 나열하도록 설정 */
-    margin-bottom: 10px; /* 각 정보 항목 사이의 간격을 조정 */
+    flex-direction: column; 
+    margin-bottom: 10px; 
   }
   
   .info-label,
   .info-text {
-    width: 100%; /* 각 항목이 부모의 100%를 차지하도록 설정 */
+    width: 50%; 
   }
 
   /*schedule calendar*/

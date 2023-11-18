@@ -1,89 +1,73 @@
 <?php
+include("../BDA_PROJECT/config.php");
 
-// connect to the database
-$db = mysqli_connect('localhost', 'root', '', 'restaurant_data');
+if (isset($_GET['stock_name'])) {
+    $param = $_GET['stock_name'];
+    $result = mysqli_query($db, "SELECT stock_id, stock_name, stock_amount, cost FROM inventory WHERE stock_name='" . $_GET['stock_name'] . "'");
 
-// get the parameter
-if (isset($_POST['submit']))
-{
-$param=$_POST['param_name'];
-$name=mysqli_real_escape_string($db, $_POST['name']);
-$amunt=mysqli_real_escape_string($db, $_POST['amount']);
-$cost=mysqli_real_escape_string($db, $_POST['cost']);
+    $row = mysqli_fetch_array($result);
 
-mysqli_query($db,"UPDATE inventory SET stock_name='$name', stock_amount='$amount', cost='$cost' WHERE stock_name='$param_name'");
-
-header("Location:inventory.php");
+    if ($row) {
+        $id = $row['stock_id'];
+        $name = $row['stock_name'];
+        $amount = $row['stock_amount'];
+        $cost = $row['cost'];
+    } else {
+        echo "No results!";
+    }
 }
 
+if (isset($_POST['submit'])) {
+    $stock_name = $_POST['stock_name'];
+    $stock_amount = mysqli_real_escape_string($db, $_POST['stock_amount']);
+    $cost = mysqli_real_escape_string($db, $_POST['cost']);
 
-if (isset($_GET['name']))
-{
+    mysqli_query($db, "UPDATE inventory SET stock_amount='$stock_amount', cost='$cost' WHERE stock_id='$id'");
 
-$id = $_GET['id'];
-$result = mysqli_query($db,"SELECT stock_name, stock_amount, cost FROM inventory WHERE S=".$_GET['id']);
-
-$row = mysqli_fetch_array($result);
-
-if($row)
-{
-
-$id = $row['product_id'];
-$name = $row['product_name'];
-$price = $row['price'];
-$quant=$row['quantity'];
-}
-else
-{
-echo "No results!";
-}
+    header("Location: inventory.php");
 }
 ?>
-
 
 <!DOCTYPE html>
 <html>
 <head>
-<title>Edit Item</title>
+    <title>Edit Item</title>
 </head>
 <body>
 
-<form action="" method="post" action="edit.php">
-<input type="hidden" name="id" value="<?php echo $id; ?>"/>
+<form method="POST" action="">
+    <table border="1">
+        <tr>
+            <td colspan="2"><b><font color='Red'>Edit Records </font></b></td>
+        </tr>
 
-<table border="1">
-<tr>
-<td colspan="2"><b><font color='Red'>Edit Records </font></b></td>
-</tr>
+        <tr>
+            <td width="179"><b><font >NAME<em>*</em></font></b></td>
+            <td>
+                <label><input type="text" name="stock_name" value="<?php echo $name; ?>" readonly /></label>
+            </td>
+        </tr>
 
-<!--edit stock name-->
-<tr>
-<td width="179"><b><font >NAME<em>*</em></font></b></td>
-<td>
-    <label><input type="text" name="name" value="<?php echo $name; ?>" /></label>
-</td>
-</tr>
-<!--edit stock amount-->
-<tr>
-<td width="179"><b><font color='#663300'>AMOUNT<em>*</em></font></b></td>
-<td><label>
-<input type="text" name="amount" value="<?php echo $amount;?>" />
-</label></td>
-</tr>
+        <tr>
+            <td width="179"><b><font color='#663300'>AMOUNT<em>*</em></font></b></td>
+            <td><label>
+                <input type="text" name="stock_amount" value="<?php echo $amount;?>" />
+            </label></td>
+        </tr>
 
-<tr>
-<td width="179"><b><font color='#663300'>COST<em>*</em></font></b></td>
-<td><label>
-<input type="text" name="cost" value="<?php echo $cost ?>" />
-</label></td>
-</tr>
+        <tr>
+            <td width="179"><b><font color='#663300'>COST<em>*</em></font></b></td>
+            <td><label>
+                <input type="text" name="cost" value="<?php echo $cost ?>" />
+            </label></td>
+        </tr>
 
-<tr align="Right">
-<td colspan="2"><label>
-<input type="submit" name="submit" value="Edit Records">
-</label></td>
-</tr>
-</table>
+        <tr align="Right">
+            <td colspan="2"><label>
+                <input type="submit" name="submit" value="Edit Records">
+            </label></td>
+        </tr>
+    </table>
 </form>
 </body>
 </html>

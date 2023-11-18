@@ -183,34 +183,44 @@
             </div>
             <div class="profile-info">
               <div class="card-body">
-                <!-- Full Name, Email, Phone, Mobile, Address 등의 정보를 각각 배치하세요 -->
                 <div class="info-row">
-                  <div class="info-label">Full Name</div>
-                  <div class="info-text">Kenneth Valdez</div>
+                  <div class="info-label">Name</div>
+                  <div class="info-text">
+                    <?php
+                    include('config.php');
+                    $name = "select profilename from schedule_staff where profilename = $$_SESSION['profilename']";
+                    ?>
+                    test: Jiyeon Kim
+                  </div>
                 </div>
                 <hr>
                 <div class="info-row">
-                  <div class="info-label">Email</div>
-                  <div class="info-text">fip@jukmuh.al</div>
+                  <div class="info-label">Id</div>
+                  <div class="info-text">
+                    <?php
+                    include('config.php');
+                    $name = "select username from schedule_staff where profilename = $$_SESSION['profilename']";
+                    ?>
+                    jiyeon@example.com
+                  </div>
                 </div>
                 <hr>
                 <div class="info-row">
-                  <div class="info-label">Phone</div>
-                  <div class="info-text">(239) 816-9029</div>
+                  <div class="info-label">Role</div>
+                  <div class="info-text">
+                    <?php
+                    include('config.php');
+                    $name = "select role from schedule_staff where profilename = $$_SESSION['profilename']";
+                    ?>
+                    manager
+                  </div>
                 </div>
                 <hr>
                 <div class="info-row">
-                  <div class="info-label">Mobile</div>
-                  <div class="info-text">(320) 380-4539</div>
-                </div>
-                <hr>
-                <div class="info-row">
-                  <div class="info-label">Address</div>
-                  <div class="info-text">Bay Area, San Francisco, CA</div>
-                </div>
-                <hr>
-                <div class="info-row">
-                  <a class="btn btn-info" target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                    <form action="edit_profile.php" method="post" style="display: inline;">
+                        <input type="hidden" name="username" value="<?php echo $row['username'] ?>">
+                        <button type="submit" name="edit-profile" style="border: none; background: none; color: black; cursor: pointer;">Edit</button>
+                    </form>
                 </div>
               </div>
             </div>
@@ -240,7 +250,13 @@
                         <tr>
                             <td class="align-middle">09:00 ~ 15:00</td>
                             <td>
-                                <span class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">Dance</span>
+                                <span class="bg-sky padding-5px-tb padding-15px-lr border-radius-5 margin-10px-bottom text-white font-size16 xs-font-size13">
+                                    <?php
+                                    include('config.php');
+                                    $name = "select profilename from schedule_staff where profilename = $$_SESSION['profilename'] && work_day = 'monday' && work_time_start = '09:00'";
+                                    ?>
+                                    test: Jiyeon Kim
+                                </span>
                                 <div class="margin-10px-top font-size14">9:00-10:00</div>
                                 <div class="font-size13 text-light-gray">
                                     <?php
