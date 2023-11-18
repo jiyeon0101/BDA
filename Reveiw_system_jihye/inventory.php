@@ -154,7 +154,7 @@
                                             <input type="hidden" name="stock_name" value="<?php echo $row["stock_name"] ?>">
                                             <button type="submit" name="edit" style="border: none; background: none; color: black; cursor: pointer;">Edit</button>
                                         </form>
-                                        <form action="delete.php" method="post" style="display: inline;">
+                                        <form action="delete1.php" method="post" style="display: inline;">
                                             <input type="hidden" name="stock_name" value="<?php echo $row["stock_name"] ?>">
                                             <button type="submit" name="delete" style="border: none; background: none; color: black; cursor: pointer;">Delete</button>
                                         </form>

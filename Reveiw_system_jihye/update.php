@@ -15,7 +15,7 @@
             $stmh->bindValue(':cost', $_POST['cost'], PDO::PARAM_INT); 
             $stmh->execute(); 
             $pdo->commit(); 
-            print $stmh->rowCount()." is edited.<br>";
+            
         } catch(PDOException $Exception) { 
             $pdo->rollBack();
             print "오류: " . $Exception->getMessage();
@@ -24,6 +24,7 @@
         $_SESSION = array();
         // 마지막으로 세션을 파기합니다.
         session_destroy();
+        header('location: inventory.php');
         ?>
     </BODY>
 </HTML>

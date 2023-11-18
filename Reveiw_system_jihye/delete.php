@@ -1,37 +1,28 @@
+<?php session_start(); ?>
+
 <?php
-// initializing variables
-$item_name = "";
-$item_price = "";
+    require_once("../BDA_PROJECT/config.php");
+    $pdo = db_connect();
 
-// connect to the database
-$db = mysqli_connect('localhost', 'root', '', 'restaurant_data');
-
-if (mysqli_connect_errno()) {
-    echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
-
-// Delete item
-if (isset($_POST['delete'])) {
-    // receive all input values from the form
-    $param = mysqli_real_escape_string($db, $_POST['stock_name']);
-
-    // Use prepared statement to prevent SQL injection
-    $query = "DELETE FROM inventory WHERE stock_name=?";
-    $stmt = mysqli_prepare($db, $query);
-
-    // Bind parameter
-    mysqli_stmt_bind_param($stmt, "s", $param);
-
-    // Execute the statement
-    if (mysqli_stmt_execute($stmt)) {
-        echo "<script>alert('Successfully deleted');</script>";
-    } else {
-        echo "<script>alert('Something went wrong!');</script>";
+    
+    try {
+        $pdo->beginTransaction();
+        $sql = 'DELETE FROM inventory WHERE stock_name = :stock_name';
+        echo "nomal";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':stock_name', $_POST['stock_name'], PDO::PARAM_STR);
+        $stmt->execute();
+        $pdo->commit();
+        echo '삭제가 성공적으로 이루어졌습니다.';
+    } catch (PDOException $e) {
+        $pdo->rollBack();
+        echo '삭제 도중 오류가 발생했습니다: ' . $e->getMessage();
     }
-
-    // Close the statement
-    mysqli_stmt_close($stmt);
-
+    
+    
+    // 세션 변수를 전부 삭제합니다.
+    $_SESSION = array();
+    // 마지막으로 세션을 파기합니다.
+    session_destroy();
     header('location: inventory.php');
-}
 ?>
