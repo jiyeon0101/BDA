@@ -113,7 +113,7 @@
                                 $sql = "select stock_name, stock_amount, cost from inventory where stock_name like ?";
 
                                 $stmt = $conn -> prepare($sql);
-                                $search_param = "%".$search."%";
+                                $search_param = "%".mysqli_real_escape_string( $conn, $search) ."%";
                                 $stmt -> bind_param("s", $search_param);
                                 $stmt -> execute();
 
@@ -145,15 +145,9 @@
                                 ?>
                                 <tr>
                                     <th><?php echo $count ?></th>
-                                    <th>
-                                    <?php echo $row["stock_name"] ?>
-                                    </th>
-                                    <th>
-                                        <?php echo $row["stock_amount"] ?>
-                                    </th>
-                                    <th>
-                                    <?php echo $row["cost"] ?>
-                                    </th>
+                                    <th><?php echo $row["stock_name"] ?></th>
+                                    <th><?php echo $row["stock_amount"] ?></th>
+                                    <th><?php echo $row["cost"] ?></th>
                                     <th>
                                         <!--edit and delete form-->
                                         <form action="edit.php" method="post" style="display: inline;">
