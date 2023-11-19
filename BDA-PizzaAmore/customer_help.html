@@ -135,19 +135,29 @@
     <nav>
         <ul>
             <li>
-                <a href="profile.html">
+                <a href="">
                     <i class="fa-regular fa-user"></i>
                     <span class="nav-item">Profile</span>
                 </a>
             </li>
-            
             <li>
-                <a href="review.php">
+                <a href="">
+                    <i class="fa-solid fa-shop"></i>
+                    <span class="nav-item">Stores</span>
+                </a>
+            </li>
+            <li>
+                <a href="ranking.php">
                     <i class="fa-regular fa-star"></i>
                     <span class="nav-item">Ranking</span>
                 </a>
             </li>
-            
+            <li>
+                <a href="review_write.html">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span class="nav-item">Analytics</span>
+                </a>
+            </li>
             <div class="logout">
                 <li>
                     <a href="settings.html">
@@ -156,7 +166,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="logout.php">
+                    <a href="mainpage.html">
                         <i class="fa-solid fa-right-from-bracket"></i>
                         <span class="nav-item">Logout</span>
                     </a>
@@ -165,13 +175,12 @@
         </ul>
     </nav>
     <div class="section">
-        <h1>Customer service</h1>
-            <h2>Ask a Question</h2>
-            <form action="answer.php" method="POST">
-                <label for="question">Your Question:</label><br>
-                <textarea id="question" name="question" rows="4" cols="50" required></textarea><br><br>
-                <input type="submit" name='submit' value="submit">
-            </form>
-    </div>
+        <h2>Submit a Question</h2>
+        <form method="post" action="submit_question.php">
+            <label for="question">Your Question:</label>
+            <textarea id="question" name="question" rows="4" cols="50" required></textarea>
+            <br>
+            <input type="submit" name="submit" value="Submit">
+        </form>
 </body>
 </html>
