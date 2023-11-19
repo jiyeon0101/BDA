@@ -115,7 +115,7 @@ if (mysqli_connect_errno()) {
                 </a>
             </li>
             <li>
-                <a href="ranking.html">
+                <a href="review.php">
                     <i class="fa-regular fa-star"></i>
                     <span class="nav-item">Ranking</span>
                 </a>

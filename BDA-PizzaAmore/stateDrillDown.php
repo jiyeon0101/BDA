@@ -55,7 +55,7 @@ include_once "database.php";
           </a>
         </li>
         <li>
-          <a href="ranking.php">
+          <a href="review.php">
             <i class="fa-regular fa-star"></i>
             <span class="nav-item">Ranking</span>
           </a>
