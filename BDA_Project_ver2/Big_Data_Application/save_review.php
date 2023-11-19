@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $user_comment = $_POST['user_comment'];
 
     // Insert data
-    $sql = "INSERT INTO reviews (ranking, comments, store_ID) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO reviews (user_rating, user_comment, store_ID) VALUES (?, ?, ?)";
     $stmt = $pdo->prepare($sql);
 
     if ($stmt->execute([$user_rating, $user_comment, $store_id])) {

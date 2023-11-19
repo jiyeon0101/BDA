@@ -32,26 +32,14 @@
 
 <body>
     <?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "restaurant_data";
-
-    // MySQL 연결
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // 연결 확인
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
+    include_once "database.php";
     // 각 상점별 평균 랭킹 및 리뷰 총 개수 쿼리
     $sql = "SELECT store_id, AVG(ranking) as avg_ranking, COUNT(*) as review_count
             FROM Reviews
             GROUP BY store_id
             ORDER BY avg_ranking DESC";
 
-    $result = $conn->query($sql);
+    $result = $dbhandle->query($sql);
 
     // 결과 출력
     if ($result->num_rows > 0) {
@@ -81,7 +69,7 @@
     }
 
     // 연결 종료
-    $conn->close();
+    $dbhandle->close();
     ?>
 
     <!-- Bar Chart -->

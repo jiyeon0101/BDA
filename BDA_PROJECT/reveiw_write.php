@@ -70,12 +70,7 @@
                     <span class="nav-item">Profile</span>
                 </a>
             </li>
-            <li>
-                <a href="stores.html">
-                    <i class="fa-solid fa-shop"></i>
-                    <span class="nav-item">Stores</span>
-                </a>
-            </li>
+        
             <li>
                 <a href="ranking.php">
                     <i class="fa-regular fa-star"></i>
@@ -85,12 +80,12 @@
             <li>
                 <a href="review_write.html">
                     <i class="fa-solid fa-chart-simple"></i>
-                    <span class="nav-item">Analytics</span>
+                    <span class="nav-item">write review</span>
                 </a>
             </li>
             <div class="logout">
                 <li>
-                    <a href="settings.html">
+                
                         <i class="fa-solid fa-gear"></i>
                         <span class="nav-item">Settings</span>
                     </a>

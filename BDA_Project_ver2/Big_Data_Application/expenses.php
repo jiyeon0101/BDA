@@ -1,5 +1,5 @@
 <?php
-$mysqli = mysqli_connect("127.0.0.1", "root", "", "restaurant_data");
+include_once "database.php";
 
 if (mysqli_connect_errno()) {
     printf("Connect failed: %s\n", mysqli_connect_error());
@@ -7,7 +7,7 @@ if (mysqli_connect_errno()) {
 } else {
     $sql = "SELECT expense_ID, SUM(location_rent + water_electricity_bill + production_cost +
     maintenance_cost + staff_cost + packaging_cost) AS total_amount FROM expenses GROUP BY expense_ID";
-    $res = mysqli_query($mysqli, $sql);
+    $res = mysqli_query($dbhandle, $sql);
 
     if ($res) {
         $data = array();
@@ -20,11 +20,11 @@ if (mysqli_connect_errno()) {
             $data[] = array("y" => $totalAmount, "label" => $category);
         }
     } else {
-        printf("Could not retrieve records: %s\n", mysqli_error($mysqli));
+        printf("Could not retrieve records: %s\n", mysqli_error($dbhandle));
     }
 
     mysqli_free_result($res);
-    mysqli_close($mysqli);
+    mysqli_close($dbhandle);
 } 
 ?>
 

@@ -2,7 +2,7 @@
 $host = "localhost";
 $username = "root";
 $password = "";
-$database = "restaurant_data";
+$database = "review3";
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$database", $username, $password);

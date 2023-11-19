@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+include_once "database.php";
 // Clear all session data
 session_destroy();
 
